@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<bean id="someBean" class="info.owczarek.aop.package2.SomeBean" />
+	<bean id="anotherBean" class="info.owczarek.aop.package1.AnotherBean" />
+	<bean id="thirdBean" class="info.owczarek.aop.package1.subpackage.ThirdBean" />
+
+	<bean id="loggingAspect" class="info.owczarek.aop.LoggingAspect" />
+	<aop:config>
+		<aop:pointcut expression="execution(* setSomething(..))" id="setSomethingExecution" />
+		<aop:pointcut expression="execution(* set*(..))" id="setterExecution" />
+		<aop:pointcut expression="execution(* *(..))" id="anyExecution" />
+		<aop:pointcut expression="execution(* set*(..)) || execution(* get*(..))" id="setterOrGetter" />
+		
+		<aop:pointcut expression="execution(* *())" id="parameterlessMethods" />  
+		<aop:pointcut expression="execution(* *(..))" id="anyNumberOfParameters" />  
+		<aop:pointcut expression="execution(* *(*))" id="withOneParameter" />  
+		<aop:pointcut expression="execution(* *(String))" id="withOneString" />  
+		<aop:pointcut expression="execution(* *(*, ..))" id="withAtLeastOneParameter" />  
+		<aop:pointcut expression="execution(* *(String, *, ..))" id="withStringAnythingOptimalMore" />  
+		
+		<aop:pointcut expression="execution(* info.owczarek.aop.*.someBean.set*(..))" id="setterFromSomeBean" />
+		<aop:pointcut expression="execution(* info.owczarek.aop.package1.*.set*(..))" id="setterFromPackage1" />
+		<aop:pointcut expression="execution(* info.owczarek.aop.package*.*.set*(..))" id="setterFromAnyPackage" />
+		<aop:pointcut expression="execution(* info.owczarek.aop.package1..*.set*(..))" id="setterFromPackage1WithSubpackages" />
+
+		<aop:pointcut expression="execution(String *(..))" id="returningString" />
+		<aop:pointcut expression="execution(void *(..))" id="returningVoid" />
+		<aop:pointcut expression="execution(* *(..))" id="returningAnything" />
+		
+		<aop:aspect ref="loggingAspect">
+<!-- 			<aop:before method="logExecution" pointcut-ref="setSomethingExecution" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="setterExecution" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="anyExecution" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="setterOrGetter" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="parameterlessMethods" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="anyNumberOfParameters" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="withOneParameter" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="withOneString" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="withAtLeastOneParameter" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="withStingAnythingOptimalMore" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="setterFromSomeBean" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="setterFromPackage1" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="setterFromAnyPackage" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="setterFromPackage1WithSubpackages" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="returningString" /> -->
+<!-- 			<aop:before method="logExecution" pointcut-ref="returningVoid" /> -->
+			<aop:before method="logExecution" pointcut-ref="returningAnything" />
+		</aop:aspect>
+	</aop:config>
+</beans>
